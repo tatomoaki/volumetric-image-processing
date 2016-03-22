@@ -10,11 +10,16 @@ class VolImage
 	VolImage(); 
 	~VolImage(); 
 		bool readImages(std::string baseName);
-
+		
+		int noImages;
+		
 		void diffmap(int sliceI, int sliceJ, std::string output_prefix);
 
 		void extract(int sliceId, std::string output_prefix);
-
+		
+		void extract_along_row(int sliceId, std::string output_prefix);
+		
 		int volImageSize(void);
+		
 };
 #endif

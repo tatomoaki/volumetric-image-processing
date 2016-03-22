@@ -13,14 +13,15 @@ VolImage::~VolImage() {
 			delete[] slices[i][j];			
 			}
 			delete []slices[i];	
-		}	
+		}
+		//std::cout << "Destructor called" << std::endl;	
 	}
 
 bool VolImage::readImages(std::string baseName){ 
 	using namespace std;
 	string *file_name = &baseName;	
 	//streampos size;
-	int noImages;
+	//int noImages;
 	string line;
 	unsigned char **array = NULL;
 	ifstream ifs ((baseName+".data").c_str(), ios::in);
@@ -86,7 +87,7 @@ void VolImage::extract(int sliceId, std::string output_prefix) {
 	string file = output_prefix+".raw";
 	ofstream ofs ((output_prefix+".data").c_str(), ios::out); 
 	if(ofs.is_open()) {
-		ofs << width << " " << height << " 1"; 
+		ofs << width << " " << height << " 1" << endl; 
 		ofs.close();
 	}
 	ofstream raws((file).c_str(), ios::out|ios::binary);
@@ -99,8 +100,29 @@ void VolImage::extract(int sliceId, std::string output_prefix) {
 	}
 		
 	}
+void VolImage::extract_along_row(int sliceId, std::string output_prefix){
+	using namespace std;
+	
+	string file = output_prefix+".raw";
+	ofstream ofs ((output_prefix+".data").c_str(), ios::out); 
+	if(ofs.is_open()) {
+		ofs << width << " " << height << " 1" << endl; 
+		ofs.close();
+	}
+	ofstream raws((file).c_str(), ios::out|ios::binary);
+	if (raws.is_open()){
+	for(unsigned int i = 0; i < slices.size(); i++) {
+		char* raw = (char*)slices[i][sliceId];
+		raws.write(raw,width);			
+		}
+		raws.close();
+	}
+	
+	
+	
+	}
 	
 int VolImage::volImageSize(void){
+	return noImages* height*(sizeof(unsigned char**)+ width);
 	
-	return 1;
 	}

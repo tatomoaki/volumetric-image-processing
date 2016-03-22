@@ -7,17 +7,24 @@ int main(int argc, char* argv[]) {
 	using namespace std;
 	std::string imageBase = argv[1];
 	VolImage voliImage;						//VoliImage Object
-	bool flag = voliImage.readImages(imageBase);
-	
+	bool flag = voliImage.readImages(imageBase);	
 	
 	if (flag) {	
-		//Extract Image
-		if(argc == 5) {				
+		//Extract Image	
+		if(argc == 5) {	
+			if(string(argv[2]).compare("-x") == 0) {		
 			int idxSlice;
 			std::istringstream (argv[3]) >> idxSlice;
 			string output_file_name = argv[4];					
 			voliImage.extract(idxSlice, output_file_name);
-			
+			}
+			else if (string(argv[2]).compare("-g") == 0) {
+			int idxSlice;
+			std::istringstream (argv[3]) >> idxSlice;
+			string output_file_name = argv[4];					
+			voliImage.extract_along_row(idxSlice, output_file_name);
+				
+			}
 		}
 		//Compute Difference Map
 		else if (argc == 6) {
@@ -28,7 +35,9 @@ int main(int argc, char* argv[]) {
 			voliImage.diffmap(i, j, output_file_name); 		
 	}
 	else {
-		std::cout << "Build internal representation" << std::endl;
+		//Output when no flags i.e ./volimage ./raws/MRI
+		std::cout << "Number of images: (int): " << voliImage.noImages << std::endl;
+		std::cout << "Number of bytes required: (int) " << voliImage.volImageSize() << std::endl;
 		
 		}
 	}
