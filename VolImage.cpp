@@ -44,7 +44,7 @@ bool VolImage::readImages(std::string baseName){
 			
 			if(rfs.is_open()) {
 					array = new unsigned char*[height];	
-					/**				
+					/**			
 					for(int i = 0; i < height; i++) {
 						array[i] = new unsigned char[width];						
  					}**/
@@ -53,6 +53,7 @@ bool VolImage::readImages(std::string baseName){
  					for (int i = 0;i < height; i++) {
 						array_ = new unsigned char[width];
 						//rfs.read((unsigned char*)(&array[i),width);
+						//rfs.read(reinterpret_cast<char*>array[i]), width);
 						rfs.read((char*)array_, width);	
 						array[i] = array_;					
 					}

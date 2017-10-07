@@ -1,0 +1,18 @@
+volimage   - name of executable
+VolImage   - implementation of methods defined in headerfile
+VolImage.h - headerfile
+makefile
+
+To extract an image slice, flag(-x / -g):
+
+	./volimage ./raws/baseName flag sliceIndex output_file_name
+
+raws is directory that contains pictures of type raw. baseName would be MRI from the given assignment folder.
+
+To compute difference map, flag (-d):
+
+	./volimage ./raws/baseName flag sliceI sliceJ output_file_name
+
+To view the number of bytes required and number of images, provide no flags:
+       
+        ./volimage ./raws/baseName
